@@ -8,7 +8,8 @@ import {
   updateCategory,
   deleteCategory,
   categoryExists,
-} from '@/services/api/xinwenlanmuguanli';
+} from '@/services/api/news-category-manager';
+import MouseTrail from '../../../components/MouseTrail';
 
 const { confirm } = Modal;
 
@@ -21,11 +22,11 @@ const CategoryPage: React.FC = () => {
   const [targetCategoryId, setTargetCategoryId] = useState<string>('');
 
   // 获取栏目列表
-  const fetchCategories = async (keyword?: string) => {
+  const fetchCategories = async (name?: string) => {
     setLoading(true);
     try {
-      const response = await searchCategories({ keyword });
-      if (response.data) {
+      const response = await searchCategories({ name });
+      if (response?.data) {
         setData(response.data);
       }
     } catch (error) {
@@ -39,7 +40,7 @@ const CategoryPage: React.FC = () => {
     if (!name) return;
     try {
       const response = await categoryExists({ name });
-      if (response.data && !editingRecord?.name) {
+      if (response?.data && !editingRecord?.name) {
         return Promise.reject('栏目名称已存在');
       }
     } catch (error) {
@@ -144,6 +145,18 @@ const CategoryPage: React.FC = () => {
         </>
       ),
     },
+    {
+      title: '修改时间',
+      dataIndex: 'updateTime',
+      key: 'updateTime',
+      render: (text: string) => text.replace('T', ' '),
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
+      render: (text: string) => text.replace('T', ' '),
+    },
   ];
 
   useEffect(() => {
@@ -206,6 +219,7 @@ const CategoryPage: React.FC = () => {
           </Form>
         </Modal>
       </Card>
+      <MouseTrail />
     </PageContainer>
   );
 };

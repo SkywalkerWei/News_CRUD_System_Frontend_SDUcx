@@ -1,4 +1,11 @@
 export namespace API {
+  export interface ResultNewsStatistics {
+    data: {
+      count: number;
+      categoryName: string;
+    }[];
+  }
+
   /** GET /api/currentUser */
   export type GET_API_CURRENT_USER_QUERY = {
     /** example:  123 */

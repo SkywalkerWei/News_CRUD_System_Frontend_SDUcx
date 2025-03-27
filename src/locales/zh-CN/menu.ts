@@ -58,4 +58,5 @@ export default {
   'menu.news': '新闻管理',
   'menu.news.newsManage': '新闻列表',
   'menu.news.categoryManage': '栏目管理',
+  'menu.news.dashboard': '数据统计',
 };

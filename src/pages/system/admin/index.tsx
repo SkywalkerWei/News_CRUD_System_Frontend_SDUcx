@@ -1,9 +1,3 @@
-/**
- * 名称：管理员维护模块
- * 作者：李洪文
- * 单位：山东大学
- * 上次修改：2023-3-3
- */
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { Button, Input, message, Space } from 'antd';
 import React, { useRef, useState } from 'react';
@@ -12,6 +6,7 @@ import { listAdmin, deleteAdmin } from '@/services/api/admin';
 import { convertPageData } from '@/utils/request';
 import InputDialog from './InputDialog';
 import { openConfirm } from '@/utils/ui';
+import MouseTrail from '../../../components/MouseTrail';
 
 export default () => {
   const [visible, setVisible] = useState(false);
@@ -99,7 +94,7 @@ export default () => {
       width: 100,
     },
     {
-      title: '部门',
+      title: '权限组',
       dataIndex: 'department',
       search: false,
       ellipsis: true,
@@ -195,6 +190,7 @@ export default () => {
         }}
         id={id}
       />
+      <MouseTrail />
     </PageContainer>
   );
 };

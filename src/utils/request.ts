@@ -7,12 +7,20 @@ export async function request<T>(
   if (!options['throwError']) {
     try {
       const resp: any = await umiRequest(url, options);
+      // 处理可能的嵌套响应
+      if (resp.data && resp.data.data) {
+        return resp.data;
+      }
       return resp.data;
     } catch (ex) {
       return undefined;
     }
   }
   const resp: any = await umiRequest(url, options);
+  // 处理可能的嵌套响应
+  if (resp.data && resp.data.data) {
+    return resp.data;
+  }
   return resp.data;
 }
 
@@ -37,3 +45,15 @@ export async function waitTime(time: number = 100) {
     }, time);
   });
 }
+
+const requestInterceptor = (url: string, options: RequestOptions) => {
+  const token = localStorage.getItem('accessToken');
+  const headers = {
+    ...options.headers,
+    'Authorization': `Bearer ${token}`,
+  };
+  return {
+    url,
+    options: { ...options, headers },
+  };
+};

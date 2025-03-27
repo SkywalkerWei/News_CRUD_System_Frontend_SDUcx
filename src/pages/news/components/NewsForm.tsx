@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Modal, Form, Input, Select, message } from 'antd';
-import { createNews, updateNews } from '@/services/api/xinwenguanli';
+import { createNews, updateNews } from '@/services/api/news-manager';
 
 interface NewsFormProps {
   visible: boolean;

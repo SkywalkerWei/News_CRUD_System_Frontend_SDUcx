@@ -2,6 +2,7 @@ import { PageContainer } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Card, theme } from 'antd';
 import React from 'react';
+import MouseTrail from '../components/MouseTrail';
 
 /**
  * 每个单独的卡片，为了复用样式抽成了组件
@@ -114,7 +115,7 @@ const Welcome: React.FC = () => {
               color: token.colorTextHeading,
             }}
           >
-            欢迎使用 Ant Design Pro
+            欢迎使用新闻管理系统
           </div>
           <p
             style={{
@@ -126,8 +127,7 @@ const Welcome: React.FC = () => {
               width: '65%',
             }}
           >
-            Ant Design Pro 是一个整合了 umi，Ant Design 和 ProComponents
-            的脚手架方案。致力于在设计规范和基础组件的基础上，继续向上构建，提炼出典型模板/业务组件/配套设计资源，进一步提升企业级中后台产品设计研发过程中的『用户』和『设计者』的体验。
+            这是一个新闻管理系统。您可以在这里管理新闻文章、栏目分类，以及查看新闻统计数据。
           </p>
           <div
             style={{
@@ -138,25 +138,26 @@ const Welcome: React.FC = () => {
           >
             <InfoCard
               index={1}
-              href="https://umijs.org/docs/introduce/introduce"
-              title="了解 umi"
-              desc="umi 是一个可扩展的企业级前端应用框架,umi 以路由为基础的，同时支持配置式路由和约定式路由，保证路由的功能完备，并以此进行功能扩展。"
+              href="/news"
+              title="新闻管理"
+              desc="在这里您可以查看、编辑、删除和发布新闻文章。"
             />
             <InfoCard
               index={2}
-              title="了解 ant design"
-              href="https://ant.design"
-              desc="antd 是基于 Ant Design 设计体系的 React UI 组件库，主要用于研发企业级中后台产品。"
+              title="栏目管理"
+              href="/news/category"
+              desc="管理新闻栏目，您可以创建、编辑和删除栏目分类。"
             />
             <InfoCard
               index={3}
-              title="了解 Pro Components"
-              href="https://procomponents.ant.design"
-              desc="ProComponents 是一个基于 Ant Design 做了更高抽象的模板组件，以 一个组件就是一个页面为开发理念，为中后台开发带来更好的体验。"
+              title="数据统计"
+              href="/news/dashboard"
+              desc="查看新闻系统的各项统计数据，包括阅读量、点赞数等信息。"
             />
           </div>
         </div>
       </Card>
+      <MouseTrail />
     </PageContainer>
   );
 };

@@ -1,19 +1,14 @@
-/**
- * 名称：登录日志查看模块
- * 作者：李洪文
- * 单位：山东大学
- * 上次修改：2023-3-3
- */
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import React, { useRef } from 'react';
 import { convertPageData, orderBy } from '@/utils/request';
 import { listLoginLog } from '@/services/api/loginLog';
+import MouseTrail from '../../../components/MouseTrail';
 
 export default () => {
   const refAction = useRef<ActionType>(null);
   const columns: ProColumns<API.LoginLogVO>[] = [
     {
-      title: '流水ID',
+      title: '序列号',
       dataIndex: 'id',
       fixed: true,
       width: 100,
@@ -82,6 +77,7 @@ export default () => {
         }}
         columns={columns}
       />
+      <MouseTrail />
     </PageContainer>
   );
 };

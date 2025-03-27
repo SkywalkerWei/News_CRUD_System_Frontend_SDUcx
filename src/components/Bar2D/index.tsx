@@ -1,9 +1,3 @@
-/*
- * @Description: 柱状图
- * @Author: 李洪文
- * @Date: 2023-4-13 22:09:28
- * @LastEditors: 李洪文
- */
 import React, { CSSProperties, useEffect } from 'react';
 import * as echarts from 'echarts';
 import 'echarts/lib/chart/bar';

@@ -31,44 +31,24 @@ export default [
   {
     path: '/news',
     name: 'news',
-    icon: 'file-text',
+    icon: 'FileText',
     routes: [
       {
         path: '/news',
         name: 'newsManage',
         component: './news',
-        access: 'hasPrivilege',
+        // access: 'hasPrivilege',
       },
       {
         path: '/news/category',
         name: 'categoryManage',
         component: './news/category',
-        access: 'hasPrivilege',
-      },
-    ],
-  },
-  {
-    path: '/base',
-    name: 'base',
-    icon: 'appstore',
-    routes: [
-      {
-        path: '/base/department',
-        name: 'department',
-        component: './base/department',
-        access: 'hasPrivilege',
+        // access: 'hasPrivilege',
       },
       {
-        path: '/base/department/detail',
-        name: 'departmentDetail',
-        hideInMenu: true,
-        component: './base/department/detail',
-        access: 'hasPrivilege',
-      },
-      {
-        path: '/base/charts',
-        name: 'charts',
-        component: './base/charts',
+        path: '/news/dashboard',
+        name: 'dashboard',
+        component: './news/dashboard',
         access: 'hasPrivilege',
       },
     ],

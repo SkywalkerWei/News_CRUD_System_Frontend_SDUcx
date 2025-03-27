@@ -1,9 +1,3 @@
-/**
- * 名称：管理员对话框中的权限列表
- * 作者：李洪文
- * 单位：山东大学
- * 上次修改：2023-3-3
- */
 import { Checkbox, CheckboxOptionType, Form, Input, Table } from 'antd';
 import WindowsFilled from '@ant-design/icons/WindowsFilled';
 import React, { useCallback, useEffect, useImperativeHandle, useState } from 'react';
@@ -63,7 +57,6 @@ export default React.forwardRef<PrivTableRef, PrivTableProps>((props: PrivTableP
   };
 
   useImperativeHandle(ref, () => ({
-    // 暴露给父组件的方法
     selectAll,
     clearSelections,
   }));

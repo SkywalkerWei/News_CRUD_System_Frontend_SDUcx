@@ -1,9 +1,3 @@
-/**
- * 名称：管理员对话框
- * 作者：李洪文
- * 单位：山东大学
- * 上次修改：2023-3-3
- */
 import { getAdmin, addAdmin, updateAdmin } from '@/services/api/admin';
 import {
   ProForm,
@@ -44,7 +38,6 @@ export default function InputDialog(props: InputDialogProps) {
     } else {
       setDisableSelect(false);
       await waitTime();
-      // 编辑场景下需要使用formMapRef循环设置formData
       formMapRef?.current?.forEach((formInstanceRef) => {
         formInstanceRef?.current?.setFieldsValue({ sex: '1', enabled: 'true' });
       });
@@ -164,7 +157,7 @@ export default function InputDialog(props: InputDialogProps) {
               },
             ]}
           />
-          <ProFormText name="department" label="部门" />
+          <ProFormText name="department" label="权限组" />
           <ProFormText name="email" label="电子邮箱" />
           <ProFormText name="phone" label="手机号" />
           <ProFormSelect

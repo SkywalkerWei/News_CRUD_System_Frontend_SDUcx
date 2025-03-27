@@ -1,11 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-components';
-import { Button, Card, Table, Modal, message, Form, Input, DatePicker, Select } from 'antd';
-import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import { queryNews, deleteNews } from '@/services/api/xinwenguanli';
-import { searchCategories } from '@/services/api/xinwenlanmuguanli';
+import { Button, Card, Table, Modal, message, Form, Input, DatePicker, Select, Switch, Tooltip } from 'antd';
+import { PlusOutlined, ExclamationCircleOutlined, LikeOutlined, EyeOutlined } from '@ant-design/icons';
+import { queryNews, deleteNews, updateNews } from '@/services/api/news-manager';
+import { searchCategories } from '@/services/api/news-category-manager';
 import NewsForm from './components/NewsForm';
 import moment from 'moment';
+import MouseTrail from '../../components/MouseTrail';
 
 const { confirm } = Modal;
 const { RangePicker } = DatePicker;
@@ -23,10 +24,32 @@ const NewsPage: React.FC = () => {
     pageSize: 10,
   });
 
+  // 处理置顶操作
+  const handleTopNews = async (id: string, isTop: boolean) => {
+    try {
+      await updateNews({ id }, { isTop });
+      message.success(isTop ? '置顶成功' : '取消置顶成功');
+      fetchNews(searchParams);
+    } catch (error) {
+      message.error(isTop ? '置顶失败' : '取消置顶失败');
+    }
+  };
+
+  // 处理点赞操作
+  const handleLike = async (id: string) => {
+    try {
+      await updateNews({ id }, { likes: data.find(item => item.id === id)?.likes + 1 });
+      message.success('点赞成功');
+      fetchNews(searchParams);
+    } catch (error) {
+      message.error('点赞失败');
+    }
+  };
+
   // 获取栏目列表
   const fetchCategories = async () => {
     try {
-      const response = await searchCategories({});
+      const response = await searchCategories({ name: '' });
       if (response.data) {
         setCategories(response.data);
       }
@@ -43,10 +66,11 @@ const NewsPage: React.FC = () => {
         ...params,
         queryDTO: {
           ...params,
+          offset: (params.current - 1) * params.pageSize,
         },
       });
-      if (response.data?.records) {
-        setData(response.data.records);
+      if (response.data?.list) {
+        setData(response.data.list);
         setTotal(response.data.total || 0);
       }
     } catch (error) {
@@ -82,8 +106,22 @@ const NewsPage: React.FC = () => {
     },
     {
       title: '栏目',
-      dataIndex: 'categoryName',
-      key: 'categoryName',
+      dataIndex: 'categoryId',
+      key: 'categoryId',
+      render: (categoryId: number) => {
+        const category = categories.find(c => c.id === categoryId);
+        return category ? category.name : categoryId;
+      },
+    },
+    {
+      title: '作者',
+      dataIndex: 'createdBy',
+      key: 'createdBy',
+    },
+    {
+      title: '最后编辑',
+      dataIndex: 'updatedBy',
+      key: 'updatedBy',
     },
     {
       title: '创建时间',
@@ -96,6 +134,39 @@ const NewsPage: React.FC = () => {
       dataIndex: 'updateTime',
       key: 'updateTime',
       render: (text: string) => moment(text).format('YYYY-MM-DD HH:mm:ss'),
+    },
+    {
+      title: '置顶',
+      dataIndex: 'isTop',
+      key: 'isTop',
+      render: (isTop: boolean, record: API.News) => (
+        <Switch
+          checked={isTop}
+          onChange={(checked) => handleTopNews(record.id, checked)}
+        />
+      ),
+    },
+    {
+      title: '点击量',
+      dataIndex: 'views',
+      key: 'views',
+      render: (views: number) => (
+        <Tooltip title="点击量">
+          <EyeOutlined /> {views}
+        </Tooltip>
+      ),
+    },
+    {
+      title: '点赞量',
+      dataIndex: 'likes',
+      key: 'likes',
+      render: (likes: number, record: API.News) => (
+        <Tooltip title="点赞">
+          <Button type="link" onClick={() => handleLike(record.id)}>
+            <LikeOutlined /> {likes}
+          </Button>
+        </Tooltip>
+      ),
     },
     {
       title: '操作',
@@ -220,6 +291,7 @@ const NewsPage: React.FC = () => {
         record={editingRecord}
         categories={categories}
       />
+      <MouseTrail />
     </PageContainer>
   );
 };

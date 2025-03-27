@@ -4,6 +4,7 @@ import { Button, Input, message, Space, Modal } from 'antd';
 import React, { useRef, useState } from 'react';
 import { listOnlineUser } from '@/services/api/onlineUser';
 import { convertPageData } from '@/utils/request';
+import MouseTrail from '../../../components/MouseTrail';
 
 const Admin: React.FC = () => {
   const intl = useIntl();
@@ -54,7 +55,7 @@ const Admin: React.FC = () => {
       width: 100,
     },
     {
-      title: '部门',
+      title: '权限组',
       dataIndex: 'department',
       search: false,
       ellipsis: true,
@@ -97,6 +98,7 @@ const Admin: React.FC = () => {
         }}
         columns={columns}
       />
+      <MouseTrail />
     </PageContainer>
   );
 };

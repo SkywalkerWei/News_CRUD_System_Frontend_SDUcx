@@ -35,6 +35,11 @@
 
 - 添加中文菜单项翻译
 
+### UI
+
+- All：增加鼠标尾迹
+- 登录界面：增加夜空流星效果
+
 ## Environment Prepare
 
 Install `node_modules`:

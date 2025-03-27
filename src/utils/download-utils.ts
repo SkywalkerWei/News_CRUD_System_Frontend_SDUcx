@@ -1,12 +1,3 @@
-/*
- * @文件描述: 下载工具类
- * @公司: 山东大学
- * @作者: 李洪文
- * @Date: 2020-05-25 17:05:25
- * @LastEditors: 李洪文
- * @LastEditTime: 2020-09-16 11:16:11
- */
-
 import { message } from 'antd';
 import axios from 'axios';
 

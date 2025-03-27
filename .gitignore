@@ -38,5 +38,5 @@ screenshot
 .firebase
 .eslintcache
 
-build
-/src/services
+# build
+# /src/services

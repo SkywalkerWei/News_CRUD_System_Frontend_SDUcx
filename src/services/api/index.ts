@@ -7,11 +7,11 @@ import * as authentication from './authentication';
 import * as department from './department';
 import * as loginLog from './loginLog';
 import * as onlineUser from './onlineUser';
-import * as xinwenguanli from './xinwenguanli';
-import * as xinwenlanmuguanli from './xinwenlanmuguanli';
+import * as newsManager from './news-manager';
+import * as newsCategoryManager from './news-category-manager';
 export default {
-  xinwenguanli,
-  xinwenlanmuguanli,
+  newsManager,
+  newsCategoryManager,
   loginLog,
   department,
   authentication,

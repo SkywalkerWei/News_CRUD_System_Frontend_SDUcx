@@ -77,11 +77,3 @@ export async function deleteNews(
     ...(options || {}),
   });
 }
-
-/** 获取新闻统计数据 GET /api/news/statistics */
-export async function queryNewsStatistics(options?: { [key: string]: any }) {
-  return request<API.ResultNewsStatistics>('/api/news-manager/statistics', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}

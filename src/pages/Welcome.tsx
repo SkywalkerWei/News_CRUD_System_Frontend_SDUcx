@@ -4,11 +4,6 @@ import { Card, theme } from 'antd';
 import React from 'react';
 import MouseTrail from '../components/MouseTrail';
 
-/**
- * 每个单独的卡片，为了复用样式抽成了组件
- * @param param0
- * @returns
- */
 const InfoCard: React.FC<{
   title: string;
   index: number;
@@ -127,7 +122,7 @@ const Welcome: React.FC = () => {
               width: '65%',
             }}
           >
-            这是一个新闻管理系统。您可以在这里管理新闻文章、栏目分类，以及查看新闻统计数据。
+            这是一个新闻管理系统。您可以在这里管理新闻文章、栏目分类，以及管理站内用户。
           </p>
           <div
             style={{
@@ -150,9 +145,9 @@ const Welcome: React.FC = () => {
             />
             <InfoCard
               index={3}
-              title="数据统计"
-              href="/news/dashboard"
-              desc="查看新闻系统的各项统计数据，包括阅读量、点赞数等信息。"
+              title="管理员管理"
+              href="/system/admin"
+              desc="查看系统内的管理员相关的信息。"
             />
           </div>
         </div>

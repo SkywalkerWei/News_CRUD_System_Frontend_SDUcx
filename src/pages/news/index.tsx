@@ -24,28 +24,6 @@ const NewsPage: React.FC = () => {
     pageSize: 10,
   });
 
-  // 处理置顶操作
-  const handleTopNews = async (id: string, isTop: boolean) => {
-    try {
-      await updateNews({ id }, { isTop });
-      message.success(isTop ? '置顶成功' : '取消置顶成功');
-      fetchNews(searchParams);
-    } catch (error) {
-      message.error(isTop ? '置顶失败' : '取消置顶失败');
-    }
-  };
-
-  // 处理点赞操作
-  const handleLike = async (id: string) => {
-    try {
-      await updateNews({ id }, { likes: data.find(item => item.id === id)?.likes + 1 });
-      message.success('点赞成功');
-      fetchNews(searchParams);
-    } catch (error) {
-      message.error('点赞失败');
-    }
-  };
-
   // 获取栏目列表
   const fetchCategories = async () => {
     try {
@@ -105,6 +83,11 @@ const NewsPage: React.FC = () => {
       key: 'title',
     },
     {
+      title: '内容',
+      dataIndex: 'content',
+      key: 'content',
+    },
+    {
       title: '栏目',
       dataIndex: 'categoryId',
       key: 'categoryId',
@@ -134,39 +117,6 @@ const NewsPage: React.FC = () => {
       dataIndex: 'updateTime',
       key: 'updateTime',
       render: (text: string) => moment(text).format('YYYY-MM-DD HH:mm:ss'),
-    },
-    {
-      title: '置顶',
-      dataIndex: 'isTop',
-      key: 'isTop',
-      render: (isTop: boolean, record: API.News) => (
-        <Switch
-          checked={isTop}
-          onChange={(checked) => handleTopNews(record.id, checked)}
-        />
-      ),
-    },
-    {
-      title: '点击量',
-      dataIndex: 'views',
-      key: 'views',
-      render: (views: number) => (
-        <Tooltip title="点击量">
-          <EyeOutlined /> {views}
-        </Tooltip>
-      ),
-    },
-    {
-      title: '点赞量',
-      dataIndex: 'likes',
-      key: 'likes',
-      render: (likes: number, record: API.News) => (
-        <Tooltip title="点赞">
-          <Button type="link" onClick={() => handleLike(record.id)}>
-            <LikeOutlined /> {likes}
-          </Button>
-        </Tooltip>
-      ),
     },
     {
       title: '操作',

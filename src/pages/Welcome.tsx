@@ -1,7 +1,6 @@
-import { PageContainer } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Card, theme } from 'antd';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import MouseTrail from '../components/MouseTrail';
 
 const InfoCard: React.FC<{
@@ -11,7 +10,6 @@ const InfoCard: React.FC<{
   href: string;
 }> = ({ title, href, index, desc }) => {
   const { useToken } = theme;
-
   const { token } = useToken();
 
   return (
@@ -45,8 +43,7 @@ const InfoCard: React.FC<{
             padding: '8px 16px 16px 12px',
             color: '#FFF',
             fontWeight: 'bold',
-            backgroundImage:
-              "url('https://gw.alipayobjects.com/zos/bmw-prod/daaf8d50-8e6d-4251-905d-676a24ddfa12.svg')",
+            backgroundImage: "url('https://gw.alipayobjects.com/zos/bmw-prod/daaf8d50-8e6d-4251-905d-676a24ddfa12.svg')",
           }}
         >
           {index}
@@ -73,7 +70,7 @@ const InfoCard: React.FC<{
         {desc}
       </div>
       <a href={href} target="_blank" rel="noreferrer">
-        了解更多 {'>'}
+        进入页面 {'>'}
       </a>
     </div>
   );
@@ -82,78 +79,103 @@ const InfoCard: React.FC<{
 const Welcome: React.FC = () => {
   const { token } = theme.useToken();
   const { initialState } = useModel('@@initialState');
+  const parallaxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      if (parallaxRef.current) {
+        parallaxRef.current.style.backgroundPosition = `calc(50% + ${scrollY * 0.5}px) calc(50% + ${scrollY * 0.5}px)`;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <PageContainer>
-      <Card
+      <div
+        ref={parallaxRef}
         style={{
-          borderRadius: 8,
-        }}
-        bodyStyle={{
-          backgroundImage:
-            initialState?.settings?.navTheme === 'realDark'
-              ? 'background-image: linear-gradient(75deg, #1A1B1F 0%, #191C1F 100%)'
-              : 'background-image: linear-gradient(75deg, #FBFDFF 0%, #F5F7FF 100%)',
+          backgroundImage: 'url(https://media.prts.wiki/f/fa/Avg_38_ex06.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: '50% 50%',
+          backgroundAttachment: 'fixed',
+          minHeight: '100vh',
+          padding: '0px',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <div
+        <Card
           style={{
-            backgroundPosition: '100% -30%',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '274px auto',
-            backgroundImage:
-              "url('https://gw.alipayobjects.com/mdn/rms_a9745b/afts/img/A*BuFmQqsB2iAAAAAAAAAAAAAAARQnAQ')",
+            borderRadius: 8,
+            backgroundColor: 'rgba(255, 255, 255, 0.85)',
+            backdropFilter: 'blur(10px)',
+            margin: 24,
+          }}
+          bodyStyle={{
+            background: 'transparent',
           }}
         >
           <div
             style={{
-              fontSize: '20px',
-              color: token.colorTextHeading,
+              position: 'relative',
+              zIndex: 2,
             }}
           >
-            欢迎使用新闻管理系统
+            <div
+              style={{
+                fontSize: '20px',
+                color: token.colorTextHeading,
+              }}
+            >
+              欢迎使用新闻管理系统
+            </div>
+            <p
+              style={{
+                fontSize: '14px',
+                color: token.colorTextSecondary,
+                lineHeight: '22px',
+                marginTop: 16,
+                marginBottom: 32,
+                width: '65%',
+              }}
+            >
+              这是一个新闻管理系统。您可以在这里管理新闻文章、栏目分类，以及管理站内用户。
+            </p>
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: 16,
+              }}
+            >
+              <InfoCard
+                index={1}
+                href="/news"
+                title="新闻管理"
+                desc="在这里您可以查看、编辑、删除和发布新闻文章。"
+              />
+              <InfoCard
+                index={2}
+                title="栏目管理"
+                href="/news/category"
+                desc="管理新闻栏目，您可以创建、编辑和删除栏目分类。"
+              />
+              <InfoCard
+                index={3}
+                title="管理员管理"
+                href="/system/admin"
+                desc="查看系统内的管理员相关的信息。"
+              />
+            </div>
           </div>
-          <p
-            style={{
-              fontSize: '14px',
-              color: token.colorTextSecondary,
-              lineHeight: '22px',
-              marginTop: 16,
-              marginBottom: 32,
-              width: '65%',
-            }}
-          >
-            这是一个新闻管理系统。您可以在这里管理新闻文章、栏目分类，以及管理站内用户。
-          </p>
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 16,
-            }}
-          >
-            <InfoCard
-              index={1}
-              href="/news"
-              title="新闻管理"
-              desc="在这里您可以查看、编辑、删除和发布新闻文章。"
-            />
-            <InfoCard
-              index={2}
-              title="栏目管理"
-              href="/news/category"
-              desc="管理新闻栏目，您可以创建、编辑和删除栏目分类。"
-            />
-            <InfoCard
-              index={3}
-              title="管理员管理"
-              href="/system/admin"
-              desc="查看系统内的管理员相关的信息。"
-            />
-          </div>
-        </div>
-      </Card>
-      <MouseTrail />
-    </PageContainer>
+        </Card>
+        <MouseTrail />
+      </div>
   );
 };
 

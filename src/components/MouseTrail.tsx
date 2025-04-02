@@ -14,8 +14,46 @@ const MouseTrail: React.FC = () => {
   const counterRef = useRef(0);
   const animationRef = useRef<number>();
   const lastTimeRef = useRef(0);
-  const interval = 50; // 间隔时间(毫秒)，增大此值会增加间隔
+  const interval = 50;
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  // 创建正方形元素的函数
+  const createSquare = (x: number, y: number) => {
+    const colors = ['#f9f383', '#eb125f', '#6eff8a', '#66ffff'];
+    const quantity = 10;
+    const distanceMin = 20;
+    const distanceMax = 100;
+
+    for (let i = 0; i < quantity; i++) {
+      const square = document.createElement('div');
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      const randomTranslateValue = () => 
+        (Math.random() < 0.5 ? -1 : 1) * (distanceMin + Math.random() * (distanceMax - distanceMin));
+      const randomSize = 10 + Math.random() * 15; // 随机大小
+      const randomRotation = Math.random() * 360; // 随机旋转角度
+
+      square.className = 'square';
+      containerRef.current?.appendChild(square);
+      
+      setTimeout(() => {
+        square.style.cssText = `
+          background-color: ${randomColor};
+          left: ${x}px;
+          top: ${y}px;
+          width: ${randomSize}px;
+          height: ${randomSize}px;
+          z-index: 999;
+          transform: translate(${randomTranslateValue()}px, ${randomTranslateValue()}px) scale(0) rotate(${randomRotation}deg);
+        `;
+      }, 0);
+
+      setTimeout(() => {
+        square.remove();
+      }, 700);
+    }
+  };
+
+  // 处理鼠标移动和点击事件
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       const now = Date.now();
@@ -41,7 +79,12 @@ const MouseTrail: React.FC = () => {
       ]);
     };
 
+    const handleClick = (e: MouseEvent) => {
+      createSquare(e.clientX, e.clientY);
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('click', handleClick);
 
     const animate = () => {
       setTrail(prev => {
@@ -59,6 +102,7 @@ const MouseTrail: React.FC = () => {
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('click', handleClick);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
@@ -66,25 +110,43 @@ const MouseTrail: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999 }}>
-      {trail.map(point => (
-        <div
-          key={point.id}
-          style={{
-            position: 'absolute',
-            left: point.x,
-            top: point.y,
-            width: `${point.size}px`,
-            height: `${point.size}px`,
-            borderRadius: '50%',
-            backgroundColor: point.color,
-            transform: 'translate(-50%, -50%)',
-            opacity: point.opacity,
-            transition: 'opacity 0.1s ease'
-          }}
-        />
-      ))}
-    </div>
+    <>
+      <div style={{ position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999 }}>
+        {trail.map(point => (
+          <div
+            key={point.id}
+            style={{
+              position: 'absolute',
+              left: point.x,
+              top: point.y,
+              width: `${point.size}px`,
+              height: `${point.size}px`,
+              borderRadius: '50%',
+              backgroundColor: point.color,
+              transform: 'translate(-50%, -50%)',
+              opacity: point.opacity,
+              transition: 'opacity 0.1s ease'
+            }}
+          />
+        ))}
+      </div>
+      <div ref={containerRef} style={{ position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9998 }} />
+      <style jsx global>{`
+        * {
+          margin: 0;
+          padding: 0;
+        }
+        body {
+          background: #c27ecf;
+        }
+        .square {
+          position: absolute;
+          transform: translate(0px, 0px) scale(1);
+          transition: all 0.7s ease-out;
+          pointer-events: none;
+        }
+      `}</style>
+    </>
   );
 };
 

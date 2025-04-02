@@ -5,17 +5,18 @@ const Settings: LayoutSettings & {
   logo?: string;
 } = {
   navTheme: 'light',
-  colorPrimary: '#1890ff',
-  layout: 'side',
+  colorPrimary: '#91cbfc',
+  layout: 'mix',
   contentWidth: 'Fluid',
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
   title: '新闻管理系统',
   pwa: false,
-  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-  iconfontUrl: '',
-  footerRender: false
+  logo: "/logo.svg",
+  footerRender: false,
+  splitMenus: false,
+  siderMenuType: "sub",
 };
 
 export default Settings;

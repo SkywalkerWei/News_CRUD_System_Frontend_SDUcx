@@ -94,12 +94,6 @@ export default () => {
       width: 100,
     },
     {
-      title: '权限组',
-      dataIndex: 'department',
-      search: false,
-      ellipsis: true,
-    },
-    {
       title: '创建人',
       dataIndex: 'createdByDesc',
       search: false,

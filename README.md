@@ -7,6 +7,9 @@
 - React
 - Ant Design Pro
 - TypeScript
+- RESTful API
+- HTML5
+- CSS3
 
 由于必须使用Ant Design作为前端框架，为了避免大量的兼容性和依赖的版本新旧问题，全部基于给定框架的`package.json`中指出的版本进行修改，不更新。
 

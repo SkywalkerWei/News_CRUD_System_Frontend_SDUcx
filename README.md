@@ -65,6 +65,10 @@
 - 增加了对触摸设备的动效响应
 - 登陆界面流星视觉效果升级，打包为单体React组件
 
+### 2025-04-07
+
+- BugFix
+
 ## Environment Prepare
 
 Install `node_modules`:

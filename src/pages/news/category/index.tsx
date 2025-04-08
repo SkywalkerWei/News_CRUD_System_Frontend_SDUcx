@@ -116,6 +116,11 @@ const CategoryPage: React.FC = () => {
   // 表格列配置
   const columns = [
     {
+      title: '栏目编号',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
       title: '栏目名称',
       dataIndex: 'name',
       key: 'name',

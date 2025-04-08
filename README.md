@@ -69,6 +69,10 @@
 
 - BugFix
 
+### 2025-04-08
+
+- 增加了栏目编号的显示
+
 ## Environment Prepare
 
 Install `node_modules`:
